@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_item_home"
+        android:icon="@drawable/ic_home"
+        android:title="Home" />
+
+    <item
+        android:id="@+id/menu_item_instrumentos"
+        android:icon="@drawable/ic_music"
+        android:title="Instrumentos" />
+
+    <item
+        android:id="@+id/menu_item_dicas"
+        android:icon="@drawable/ic_dicas"
+        android:title="Dicas" />
+</menu>

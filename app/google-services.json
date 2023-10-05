@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "862825217063",
+    "project_id": "guitarcare-1a602",
+    "storage_bucket": "guitarcare-1a602.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:862825217063:android:31070ccee08b9ebfb06202",
+        "android_client_info": {
+          "package_name": "com.souza.careguitar"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "862825217063-qtpmmlc6hba4hglr0apu5i194csvnott.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.souza.careguitar",
+            "certificate_hash": "a89467d2582be1cb0138bde43d822e2ea5e9b046"
+          }
+        },
+        {
+          "client_id": "862825217063-2sqngk40a2mlntimvkc4bae5b6676pak.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAR2asOPseK4X2SfLdN7XI8vuTk5LTRMBM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "862825217063-2sqngk40a2mlntimvkc4bae5b6676pak.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

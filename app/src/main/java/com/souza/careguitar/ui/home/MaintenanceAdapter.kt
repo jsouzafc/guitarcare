@@ -9,8 +9,7 @@ import com.souza.careguitar.databinding.MaintenanceItemViewBinding
 
 data class Maintenance (
     val id: String? = null,
-    val name: String? = null,
-    val subtitle: String? = null,
+    val description: String? = null,
     val date: String? = null
 )
 
@@ -25,8 +24,7 @@ class MaintenanceAdapter(
 
     override fun onBindViewHolder(holder: MaintenanceViewHolder, position: Int) {
         val maintenanceItem = maintenances[position]
-        holder.binding.textViewTitle.text = maintenanceItem.name
-        holder.binding.textViewSubtitle.text = maintenanceItem.subtitle
+        holder.binding.textViewTitle.text = maintenanceItem.description
         holder.binding.textViewDate.text = maintenanceItem.date
     }
 }

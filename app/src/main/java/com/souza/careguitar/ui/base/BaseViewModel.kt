@@ -1,14 +1,14 @@
-package com.souza.careguitar.ui.home
+package com.souza.careguitar.ui.base
 
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.souza.careguitar.ui.home.Instrument
 
-class HomeViewModel(
+class BaseViewModel(
     private val db: FirebaseFirestore,
     private val auth: FirebaseAuth,
 ): ViewModel() {

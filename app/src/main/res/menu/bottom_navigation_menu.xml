@@ -3,7 +3,7 @@
     <item
         android:id="@+id/menu_item_home"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="Inicio" />
 
     <item
         android:id="@+id/menu_item_instrumentos"
@@ -18,5 +18,5 @@
     <item
         android:id="@+id/menu_item_signout"
         android:icon="@drawable/ic_close"
-        android:title="Dicas" />
+        android:title="Sair" />
 </menu>

@@ -2,7 +2,7 @@ package com.souza.careguitar.di
 
 import com.google.firebase.FirebaseApp
 import com.google.firebase.firestore.FirebaseFirestore
-import com.souza.careguitar.ui.home.HomeViewModel
+import com.souza.careguitar.ui.base.BaseViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -16,6 +16,6 @@ val appModule = module {
     }
 
     viewModel {
-        HomeViewModel(get(), get())
+        BaseViewModel(get(), get())
     }
 }

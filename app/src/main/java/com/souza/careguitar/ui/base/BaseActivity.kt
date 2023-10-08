@@ -2,6 +2,7 @@ package com.souza.careguitar.ui.base
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
@@ -26,7 +27,7 @@ class BaseActivity : ScopeActivity() {
     private val displayLoginScreen: DisplayLoginScreen by inject()
     private val viewModel: LoginViewModel by viewModel()
     lateinit var activityResultLauncher: ActivityResultLauncher<IntentSenderRequest>
-
+    private val baseViewModel: BaseViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityBaseBinding.inflate(layoutInflater)
@@ -42,6 +43,14 @@ class BaseActivity : ScopeActivity() {
 
     private fun setupListeners() {
 
+    }
+
+    fun hideBottomBar() {
+        binding.bottomNavigation.visibility = View.GONE
+    }
+
+    fun showBottomBar() {
+        binding.bottomNavigation.visibility = View.VISIBLE
     }
 
     private fun setupObservers() = with(viewModel) {

@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.google.android.gms.auth.GOOGLE_SIGN_IN" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -10,11 +12,12 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
+        android:name=".utils.MyApplication"
         android:supportsRtl="true"
         android:theme="@style/Theme.GuitarCareApp"
         tools:targetApi="31">
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.base.BaseActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/Theme.GuitarCareApp">
@@ -24,8 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name=".ui.home.HomeActivity" />
     </application>
 
 </manifest>

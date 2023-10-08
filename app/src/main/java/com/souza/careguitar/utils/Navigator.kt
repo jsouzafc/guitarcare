@@ -13,6 +13,10 @@ interface Navigator {
     fun pop()
 
     fun back(): Boolean
+
+    fun single(containerId: Int, screen: Fragment)
+
+    fun single(containerId: Int, screen: Fragment, addToBackStack: Boolean)
 }
 
 fun FragmentManager.isNotReadyForTransaction(): Boolean = isDestroyed || isStateSaved

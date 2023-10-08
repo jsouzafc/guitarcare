@@ -1,2 +1,5 @@
-package com.souza.careguitar.di 
+package com.souza.careguitar.utils
 
+interface VoidCommand {
+    fun execute()
+}

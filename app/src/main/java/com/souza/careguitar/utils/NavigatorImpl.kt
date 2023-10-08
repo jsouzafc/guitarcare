@@ -46,6 +46,26 @@ class NavigatorImpl(
         return true
     }
 
+    override fun single(containerId: Int, screen: Fragment) {
+        if (fragmentManager.isNotReadyForTransaction()) return
+
+        val backStackEntryCount = fragmentManager.backStackEntryCount
+        for (i in 0 until backStackEntryCount) {
+            fragmentManager.popBackStack()
+        }
+        go(containerId, screen)
+    }
+
+    override fun single(containerId: Int, screen: Fragment, addToBackStack: Boolean) {
+        if (fragmentManager.isNotReadyForTransaction()) return
+
+        val backStackEntryCount = fragmentManager.backStackEntryCount
+        for (i in 0 until backStackEntryCount) {
+            fragmentManager.popBackStack()
+        }
+        go(containerId, screen, addToBackStack)
+    }
+
     private fun top(): Fragment? {
         return try {
             fragmentManager.executePendingTransactions()

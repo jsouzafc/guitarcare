@@ -1,17 +1,17 @@
 package com.souza.careguitar.ui.base.navigation
 
 import com.souza.careguitar.R
-import com.souza.careguitar.ui.home.HomeFragment
+import com.souza.careguitar.ui.login.LoginFragment
 import com.souza.careguitar.utils.Navigator
 import com.souza.careguitar.utils.VoidCommand
 
-interface DisplayHomeScreen: VoidCommand
+interface DisplayLoginScreen: VoidCommand
 
-class DisplayHomeScreenImpl(
+class DisplayLoginScreenImpl(
     private val navigator: Navigator
-): DisplayHomeScreen {
+): DisplayLoginScreen {
 
     override fun execute() {
-        navigator.single(R.id.main_container, HomeFragment())
+        navigator.single(R.id.main_container, LoginFragment())
     }
 }

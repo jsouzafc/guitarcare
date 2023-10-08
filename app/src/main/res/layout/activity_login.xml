@@ -8,14 +8,14 @@
     <View
         android:id="@+id/view"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:background="@android:color/holo_orange_light"
+        android:layout_height="match_parent"
+        android:background="#00425F"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardView2"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="wrap_content"
         android:layout_margin="30dp"
         android:background="#d3d3d3"
         app:cardCornerRadius="30dp"
@@ -38,12 +38,28 @@
                 android:src="@drawable/baseline_person_pin_24" />
 
             <TextView
+                android:id="@+id/email_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="Google Login"
                 android:textAlignment="center"
                 android:textSize="32sp" />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/email_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginHorizontal="16dp"
+                android:hint="Email"/>
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/password_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:hint="Senha"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -73,7 +89,43 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Sign in with Google"
+                        android:text="Login"
+                        android:textAlignment="center"
+                        android:textSize="16sp"
+                        android:textColor="@android:color/white"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="30dp"
+                android:layout_gravity="center"
+                android:clickable="true"
+                android:focusable="true"
+                android:id="@+id/sign_out_cv">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/black"
+                    android:padding="10dp">
+
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_gravity="start"
+                        android:src="@drawable/google_button"
+                        android:layout_marginEnd="5dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="SignUp"
                         android:textAlignment="center"
                         android:textSize="16sp"
                         android:textColor="@android:color/white"/>

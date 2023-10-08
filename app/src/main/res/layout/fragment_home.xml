@@ -7,21 +7,6 @@
     android:orientation="vertical">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_top"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="16dp"
-        android:layout_marginRight="16dp"
-        tools:listitem="@layout/instrument_item_view"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_marginTop="16dp"
-        android:clipToPadding="false"/>
-
-    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_bottom"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -32,19 +17,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/maintenance_item_view"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/recycler_view_top"
-        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:clipToPadding="false" />
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_navigation_menu" />
+        app:spanCount="2"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        android:clipToPadding="false" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

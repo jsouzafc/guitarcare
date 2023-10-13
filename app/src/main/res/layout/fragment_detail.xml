@@ -58,7 +58,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/share_iv"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/instrument_title_tv"
-                tools:text="Sua manutenção está em dia! :)" />
+                android:text="Sua manutenção está em dia! :)" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/remove_iv"
@@ -106,7 +106,7 @@
     </androidx.cardview.widget.CardView>
 
     <TextView
-        android:id="@+id/historic_tv"
+        android:id="@+id/history_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="#fff"
@@ -114,7 +114,7 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="@+id/card_view_top"
         app:layout_constraintTop_toBottomOf="@id/card_view_top"
-        tools:text="Histórico +" />
+        android:text="Histórico +" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_bottom"
@@ -127,7 +127,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         tools:listitem="@layout/maintenance_item_view"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/historic_tv"
+        app:layout_constraintTop_toBottomOf="@id/history_tv"
         app:layout_constraintBottom_toBottomOf="parent"
         app:spanCount="2"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"

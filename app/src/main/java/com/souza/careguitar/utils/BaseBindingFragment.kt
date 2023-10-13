@@ -1,11 +1,14 @@
 package com.souza.careguitar.utils
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.viewbinding.ViewBinding
 import org.koin.androidx.scope.ScopeFragment
+
 
 abstract class BaseBindingFragment<V: ViewBinding> : ScopeFragment() {
 
@@ -25,6 +28,14 @@ abstract class BaseBindingFragment<V: ViewBinding> : ScopeFragment() {
     override fun onDestroyView() {
         _binding = null
         super.onDestroyView()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+        super.onActivityResult(requestCode, resultCode, intent)
+        val fragment: Fragment? = childFragmentManager.findFragmentByTag(tag) as Fragment?
+        if (fragment != null) {
+            fragment.onActivityResult(requestCode, resultCode, intent)
+        }
     }
 
     protected abstract fun inflateBinding(container: ViewGroup?, savedInstanceState: Bundle?): V?

@@ -1,5 +1,6 @@
 package com.souza.careguitar.utils
 
+import android.app.Activity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import kotlin.system.exitProcess

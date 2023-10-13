@@ -16,7 +16,7 @@
         android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="Histórico +" />
+        android:text="Dicas" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view_bottom"

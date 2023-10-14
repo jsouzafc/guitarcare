@@ -10,7 +10,6 @@ import com.souza.careguitar.ui.base.BaseViewModel
 import com.souza.careguitar.ui.base.navigation.DisplayAddScreen
 import com.souza.careguitar.ui.base.navigation.DisplayHomeScreen
 import com.souza.careguitar.ui.home.Instrument
-import com.souza.careguitar.ui.home.Maintenance
 import com.souza.careguitar.ui.home.MaintenanceAdapter
 import com.souza.careguitar.utils.BaseBindingFragment
 import com.squareup.picasso.Picasso
@@ -42,28 +41,13 @@ class InstrumentDetailActivity: BaseBindingFragment<FragmentDetailBinding>() {
             binding.instrumentTitleTv.text = instrument?.name
         }
 
-        binding.deleteIv.setOnClickListener {
-            instrument?.let { it1 -> viewModel.deleteInstrument(it1) }
-        }
-
-        binding.photoIv.setOnClickListener {
-            try {
-                val intent = Intent(Intent.ACTION_PICK)
-                intent.type = "image/*"
-                startActivityForResult(intent, 1)
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-        }
-
-        binding.historyTv.setOnClickListener {
-            displayAddScreen.execute(DisplayAddScreen.Args(false, instrument?.id.orEmpty()))
-        }
-
+        setListeners()
+        setObservers()
         viewModel.getMaintenance(instrument?.id.orEmpty())
-
         binding.recyclerViewBottom.adapter = maintenanceAdapter
+    }
 
+    private fun setObservers() {
         viewModel.instrumentImage.observe(this) {
             Picasso.get().load(it).into(binding.instrumentDetailIv)
         }
@@ -84,9 +68,36 @@ class InstrumentDetailActivity: BaseBindingFragment<FragmentDetailBinding>() {
         }
     }
 
+    private fun setListeners() {
+        binding.deleteIv.setOnClickListener {
+            instrument?.let { it1 -> viewModel.deleteInstrument(it1) }
+        }
+
+        binding.photoIv.setOnClickListener {
+            try {
+                val intent = Intent(Intent.ACTION_PICK)
+                intent.type = "image/*"
+                startActivityForResult(intent, 2)
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
+        binding.historyTv.setOnClickListener {
+            displayAddScreen.execute(DisplayAddScreen.Args(false, instrument))
+        }
+
+        binding.shareIv.setOnClickListener {
+            val shareIntent = Intent(Intent.ACTION_SEND)
+            shareIntent.type = "text/plain"
+            shareIntent.putExtra(Intent.EXTRA_TEXT, viewModel.maintenance.value.toString())
+            startActivity(Intent.createChooser(shareIntent, "Compartilhar via"))
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == 1 && resultCode == RESULT_OK) {
+        if (requestCode == 2 && resultCode == RESULT_OK) {
             data?.data?.let { uri ->
                 viewModel.uploadInstrumentImage(instrument?.id.orEmpty(), uri)
             }

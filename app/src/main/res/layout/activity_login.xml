@@ -58,6 +58,7 @@
                 android:id="@+id/password_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="numberPassword"
                 android:layout_marginHorizontal="16dp"
                 android:hint="Senha"/>
 
@@ -71,10 +72,10 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="8dp"
                     android:layout_gravity="center"
                     android:layout_margin="8dp"
-                    app:cardBackgroundColor="#000"
+                    app:cardBackgroundColor="#407287"
                     android:clickable="true"
                     android:focusable="true"
                     android:id="@+id/Signin">
@@ -95,11 +96,11 @@
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:cardCornerRadius="16dp"
+                    app:cardCornerRadius="8dp"
                     android:layout_gravity="center"
                     android:clickable="true"
                     android:layout_margin="8dp"
-                    app:cardBackgroundColor="#000"
+                    app:cardBackgroundColor="#407287"
                     android:focusable="true"
                     android:id="@+id/sign_out_cv">
 

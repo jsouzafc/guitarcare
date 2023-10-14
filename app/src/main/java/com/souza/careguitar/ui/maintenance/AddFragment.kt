@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.souza.careguitar.databinding.FragmentAddBinding
 import com.souza.careguitar.ui.base.BaseViewModel
 import com.souza.careguitar.ui.base.navigation.DisplayHomeScreen
+import com.souza.careguitar.ui.base.navigation.DisplayInstrumentDetailScreen
 import com.souza.careguitar.ui.base.navigation.PopFragment
 import com.souza.careguitar.ui.home.Instrument
 import com.souza.careguitar.ui.home.Maintenance
@@ -21,11 +22,12 @@ import java.util.UUID
 
 class AddFragment: BaseBindingFragment<FragmentAddBinding>() {
 
+    private val displayInstrumentDetailScreen: DisplayInstrumentDetailScreen by inject()
     private val displayHomeScreen: DisplayHomeScreen by inject()
     private val viewModel: BaseViewModel by viewModel()
     private var imageUri: String? = null
     private var isAddInstrument = false
-    private var instrumentId: String? = null
+    private var instrument: Instrument? = null
 
     override fun inflateBinding(
         container: ViewGroup?,
@@ -43,7 +45,7 @@ class AddFragment: BaseBindingFragment<FragmentAddBinding>() {
 
         arguments?.let {
             isAddInstrument = it.getBoolean("isAddInstrument")
-            instrumentId = it.getString("instrumentId")
+            instrument = it.getParcelable<Instrument>("instrument")
         }
 
         initObservers()
@@ -65,6 +67,7 @@ class AddFragment: BaseBindingFragment<FragmentAddBinding>() {
             binding.descriptionEt.isGone = true
             binding.dateEt.isGone = true
         } else {
+            binding.photoIv.isGone = true
             binding.nameEt.isGone = true
         }
 
@@ -76,9 +79,9 @@ class AddFragment: BaseBindingFragment<FragmentAddBinding>() {
                     name = binding.nameEt.text.toString()
                 ))
             } else {
-                viewModel.addMaintenance(instrumentId = instrumentId.orEmpty(),
+                viewModel.addMaintenance(
                     maintenance = Maintenance(
-                        instrumentId = instrumentId,
+                        instrumentId = instrument?.id,
                         description = binding.descriptionEt.text.toString(),
                         date = binding.dateEt.text.toString()
                     )
@@ -90,6 +93,12 @@ class AddFragment: BaseBindingFragment<FragmentAddBinding>() {
     private fun initObservers() {
         viewModel.onInstrumentAdded.observe(viewLifecycleOwner) {
             displayHomeScreen.execute(DisplayHomeScreen.Args(true))
+        }
+
+        viewModel.onMaintenanceAdded.observe(viewLifecycleOwner) {
+            instrument?.let {
+                displayInstrumentDetailScreen.execute(DisplayInstrumentDetailScreen.Args(it, requireContext()))
+            }
         }
     }
 
@@ -105,12 +114,12 @@ class AddFragment: BaseBindingFragment<FragmentAddBinding>() {
     companion object {
         fun newInstance(
             isAddInstrument: Boolean,
-            instrumentId: String? = null
+            instrument: Instrument? = null
         ): Fragment {
             val fragment = AddFragment()
             val args = Bundle()
             args.putBoolean("isAddInstrument", isAddInstrument)
-            args.putString("instrumentId", instrumentId)
+            args.putParcelable("instrument", instrument)
             fragment.arguments = args
             return fragment
         }

@@ -8,9 +8,15 @@ import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FileDownloadTask
 import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageTask
 import com.souza.careguitar.ui.home.Instrument
 import com.souza.careguitar.ui.home.Maintenance
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import java.io.File
 
 class BaseViewModel(
     private val storage: FirebaseStorage,
@@ -29,6 +35,9 @@ class BaseViewModel(
 
     private val _onInstrumentAdded = MutableLiveData<Unit>()
     val onInstrumentAdded: LiveData<Unit> = _onInstrumentAdded
+
+    private val _onMaintenanceAdded = MutableLiveData<Unit>()
+    val onMaintenanceAdded: LiveData<Unit> = _onMaintenanceAdded
 
     var collectionReference: CollectionReference? = null
 
@@ -74,7 +83,6 @@ class BaseViewModel(
     }
 
     fun addMaintenance(
-        instrumentId: String,
         maintenance: Maintenance
     ) {
         val userId = auth.currentUser?.uid
@@ -82,17 +90,8 @@ class BaseViewModel(
         val reference = db.collection("users").document(userId.orEmpty()).collection("maintenance")
 
         if (userId != null) {
-            reference?.document()?.get()?.addOnSuccessListener { documentSnapshot ->
-                if (documentSnapshot.exists()) {
-                    val documentId = documentSnapshot.id
-                    // Use o documentId como a chave do documento
-                } else {
-                    // O documento não existe
-                }
-            }
-
             reference?.add(maintenance)?.addOnSuccessListener {
-                getMaintenance(instrumentId)
+                _onMaintenanceAdded.postValue(Unit)
             }?.addOnFailureListener { exception ->
 
             }
@@ -103,38 +102,17 @@ class BaseViewModel(
         collectionReference?.whereEqualTo("id", instrument.id)?.get()
             ?.addOnSuccessListener { querySnapshot ->
                 for (document in querySnapshot.documents) {
-                    // Para cada documento encontrado, exclua-o
                     collectionReference?.document(document.id)?.delete()
                         ?.addOnSuccessListener {
-                            // Documento deletado com sucesso
                             _onDeleteInstrument.postValue(Unit)
                         }
                         ?.addOnFailureListener { e ->
-                            // Ocorreu um erro ao deletar o documento
                             Log.e("TAG", "Erro ao deletar o documento: $e")
                         }
                 }
             }
             ?.addOnFailureListener { e ->
-                // Ocorreu um erro ao executar a consulta
                 Log.e("TAG", "Erro ao executar a consulta: $e")
-            }
-    }
-
-    fun updateInstrument(instrumentId: String, name: String) {
-        val newInstrumentData = mapOf(
-            "name" to name,
-        )
-
-        val instrumentRef = collectionReference?.document(instrumentId)
-
-        instrumentRef
-            ?.update(newInstrumentData)
-            ?.addOnSuccessListener {
-                // Instrumento foi atualizado com sucesso
-            }
-            ?.addOnFailureListener { e ->
-                // Ocorreu um erro ao tentar atualizar o instrumento, lide com o erro aqui
             }
     }
 
@@ -152,50 +130,27 @@ class BaseViewModel(
                 } else {
                     Log.d("TAG", "No such document")
                 }
-
-            /*    for (document in querySnapshot.documents) {
-                    val instrument = document.toObject(Instrument::class.java)
-                    if (instrument != null) {
-                        // Atualize o instrument encontrado, se necessário.
-                        // Por exemplo, para atualizar a imagem:
-                        instrument.image = image
-
-                        // Atualize o documento no Firestore.
-                        collectionReference?.document(document.id)?.set(instrument)
-                            ?.addOnSuccessListener {
-                                query?.get()
-                                    ?.addOnSuccessListener { querySnapshot ->
-                                        if (!querySnapshot.isEmpty) {
-                                            val instrument = querySnapshot.documents[0].toObject(Instrument::class.java)
-                                            val image = instrument?.image ?: ""
-                                            _instrumentImage.postValue(image)
-                                        }
-                                    }
-                            }
-                            ?.addOnFailureListener { e ->
-                                // Ocorreu um erro na atualização.
-                            }
-                    }
-                }*/
             }
             ?.addOnFailureListener { e ->
-                // Ocorreu um erro ao buscar documentos.
             }
-
     }
 
     private fun getHelp() {
-        val query = db.collection("help")
+        val reference = storage.reference
+        val imageRef = reference.child("help/help.json")
 
-        query.get().addOnSuccessListener {
-            val urls = ArrayList<String>()
+        val localFile = File.createTempFile("temp", "json")
 
-            for (document in it.documents) {
-                val url = document.getString("url")
-                url?.let { urls.add(it) }
-            }
+        val storageTask: StorageTask<FileDownloadTask.TaskSnapshot> = imageRef.getFile(localFile)
 
-            _help.postValue(urls)
+        storageTask.addOnSuccessListener {
+            val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
+            val listType = Types.newParameterizedType(List::class.java, HelpItem::class.java)
+            val adapter = moshi.adapter<List<HelpItem>>(listType)
+            val helpItems: List<HelpItem>? = adapter.fromJson(localFile.readText())
+             _help.postValue(helpItems?.map { it.url }?.filterNotNull())
+        }.addOnFailureListener {
+            println("Erro ao baixar o arquivo JSON.")
         }
     }
 

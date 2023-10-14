@@ -35,10 +35,14 @@ class BaseViewModel(
     private val _maintenance = MutableLiveData<List<Maintenance>>()
     val maintenance: LiveData<List<Maintenance>> = _maintenance
 
+    private val _help = MutableLiveData<List<String>>()
+    val help: LiveData<List<String>> = _help
+
     init {
         collectionReference = auth.currentUser?.uid?.let {
             db.collection("users").document(it).collection("instruments")
         }
+        getHelp()
     }
 
     fun getInstruments(query: String = "") {
@@ -180,6 +184,21 @@ class BaseViewModel(
 
     }
 
+    private fun getHelp() {
+        val query = db.collection("help")
+
+        query.get().addOnSuccessListener {
+            val urls = ArrayList<String>()
+
+            for (document in it.documents) {
+                val url = document.getString("url")
+                url?.let { urls.add(it) }
+            }
+
+            _help.postValue(urls)
+        }
+    }
+
     fun uploadInstrumentImage(
         instrumentId: String,
         selectedImageUri: Uri
@@ -195,9 +214,10 @@ class BaseViewModel(
                     updateInstrumentImage(instrumentId, imageUrl)
                 }
             }
-            .addOnFailureListener { e ->
-                // Ocorreu um erro durante o upload
-                val test = 1
-            }
+            .addOnFailureListener { e -> }
     }
 }
+
+data class HelpItem(
+    val url: String?
+)
